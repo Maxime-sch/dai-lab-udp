@@ -1,5 +1,11 @@
 package com.labodai.shared;
 
 public enum Instrument {
-    GUITAR, BASS, BANJO, DOBRO, FIDDLE, SITAR
+    PIANO, TRUMPET, FLUTE, VIOLIN, DRUM;
+
+    private final String sound;
+
+    public static void convert(String value){
+        Instrument.valueOf(value);
+    }
 }
