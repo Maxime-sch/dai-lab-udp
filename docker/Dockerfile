@@ -1,9 +1,10 @@
 FROM maven:3-eclipse-temurin-21-alpine as BUILDER
 
+ARG SOURCE_PATH
+
 WORKDIR /build
 
-COPY ./src src
-COPY pom.xml pom.xml
+COPY $SOURCE_PATH ./
 
 RUN mvn clean compile assembly:single
 
