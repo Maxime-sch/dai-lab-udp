@@ -1,35 +1,27 @@
 package com.labodai.shared;
 
 public enum Instrument {
-    PIANO, TRUMPET, FLUTE, VIOLIN, DRUM;
+    PIANO("ti-ta-ti"),
+    TRUMPET("pouet"),
+    FLUTE("trulu"),
+    VIOLIN("gzi-gzi"),
+    DRUM("boum-boum");
 
     private final String sound;
 
-    public String getSound() {
-        
-        switch(this) {
-      
-      case PIANO:
-        return "ti-ta-ti";
-
-      case TRUMPET:
-        return "pouet";
-
-      case FLUTE:
-        return "trulu";
-
-      case VIOLIN:
-        return "gzi-gzi";
-      
-      case DRUM:
-        return "boum-boum";
-
-      default:
-        return null;
-      }
+    Instrument(String sound) {
+        this.sound = sound;
     }
 
-    public static void convert(String value){
-        Instrument.valueOf(value);
+    public String getSound() {
+        return this.sound;
+    }
+
+    public static Instrument convert(String value){ //TODO is it useful?
+        try {
+            return Instrument.valueOf(value);
+        } catch (IllegalArgumentException ex) {
+            return null;
+        }
     }
 }
