@@ -37,11 +37,23 @@ class Musician {
              }        
         }
     }
+
     public static void main(String[] args) {
-        Instrument instrument = Instrument.PIANO; // Choose the instrument for the musician we're going to create
+        if (args.length < 1) {
+            System.out.println("Please provide the instrument as a command-line argument.");
+            return;
+        }
+
+        Instrument instrument;
+        try {
+            instrument = Instrument.valueOf(args[0].toUpperCase());
+        } catch (IllegalArgumentException e) {
+            System.out.println("Invalid instrument. Please provide a valid instrument.");
+            return;
+        }
         Musician musician = new Musician(instrument);
         Timer timer = new Timer();
         timer.schedule(musician.new PlayInstrument(), 0, 1000); // Schedule the PlayInstrument task
         Runtime.getRuntime().addShutdownHook(new Thread(timer::cancel));
-    }
+    } //TODO how and when to stop the musician??
 }
