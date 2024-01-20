@@ -27,7 +27,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>com.labodai.musician.Musicianr</mainClass>
+                            <mainClass>com.labodai.musician.Musician</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>
