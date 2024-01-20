@@ -1,7 +1,6 @@
 package com.labodai.musician;
 
-import com.labodai.shared.Instrument;
-import com.labodai.shared.UdpConstants;
+import com.labodai.shared.*;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
@@ -13,18 +12,18 @@ import static java.nio.charset.StandardCharsets.*;
 
 class Musician {
     private final Instrument instrument;
-    private final String uuid;
+    private final UUID uuid;
 
     public Musician(Instrument instrument) {
         this.instrument = instrument;
-        uuid = UUID.randomUUID().toString();
+        uuid = UUID.randomUUID();
     }
 
-   public String toString() { 
-      return "{\"uuid\": \"" + uuid + "\", \"sound\": \" " + instrument.getSound() + "\"}"; 
+   public String toString() { // JSON serialization of our musician playing a sound
+      return "{\"uuid\": \"" + uuid.toString() + "\", \"sound\": \" " + instrument.getSound() + "\"}";
    }  
 
-    class PlayInstrument extends TimerTask {
+    class PlayInstrument extends TimerTask { //sends UDP packets with the aforementioned serialization
         public void run() {
             try (DatagramSocket socket = new DatagramSocket()) {
                   String message = Musician.this.toString();
@@ -55,5 +54,5 @@ class Musician {
         Timer timer = new Timer();
         timer.schedule(musician.new PlayInstrument(), 0, 1000); // Schedule the PlayInstrument task
         Runtime.getRuntime().addShutdownHook(new Thread(timer::cancel));
-    } //TODO how and when to stop the musician??
+    }
 }
