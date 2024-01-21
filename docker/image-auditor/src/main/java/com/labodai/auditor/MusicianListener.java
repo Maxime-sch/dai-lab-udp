@@ -48,10 +48,10 @@ public class MusicianListener implements Runnable {
 
     @Override
     public void run() {
-        try(var socket = new MulticastSocket(address.getPort())) {
+        try (var socket = new MulticastSocket(address.getPort())) {
             joinGroupOnAllInterfaces(socket);
 
-            var buffer =  new byte[1024];
+            var buffer = new byte[1024];
             var datagram = new DatagramPacket(buffer, 0, buffer.length);
 
             while (true) {
@@ -65,5 +65,7 @@ public class MusicianListener implements Runnable {
         }
     }
 
-    private record MusicianMessage(String uuid, String sound) {};
+    private record MusicianMessage(String uuid, String sound) {
+    }
+
 }

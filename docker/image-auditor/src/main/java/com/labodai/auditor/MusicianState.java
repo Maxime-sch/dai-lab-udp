@@ -30,10 +30,10 @@ public class MusicianState {
 
     public synchronized void onMusicianHeard(String uuid, String sound) {
         var matchingMusician = musicians.stream()
-                        .filter(musician -> musician.getUuid().equals(uuid))
-                        .findFirst();
+                .filter(musician -> musician.getUuid().equals(uuid))
+                .findFirst();
 
-        if(matchingMusician.isPresent()) {
+        if (matchingMusician.isPresent()) {
             matchingMusician.get().setLastHeard(Instant.now());
         } else {
             musicians.add(new Musician(

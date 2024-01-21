@@ -32,6 +32,28 @@ class Musician {
         uuid = UUID.randomUUID();
     }
 
+    public static Instrument getInstrumentFromArgs(String[] args) {
+        if (args.length < 1) {
+            System.out.println("Please provide the instrument as a command-line argument.");
+            System.exit(1);
+        }
+
+        try {
+            return Instrument.valueOf(args[0].toUpperCase());
+        } catch (IllegalArgumentException e) {
+            System.out.println("Invalid instrument. Please provide a valid instrument.");
+            System.exit(1);
+        }
+
+        return null;
+    }
+
+    public static void main(String[] args) throws IOException, InterruptedException {
+        Instrument instrument = getInstrumentFromArgs(args);
+        Musician musician = new Musician(instrument);
+        musician.play();
+    }
+
     public String toString() {
         return gson.toJson(this);
     }
@@ -53,27 +75,5 @@ class Musician {
                 Thread.sleep(Duration.ofSeconds(1));
             }
         }
-    }
-
-    public static Instrument getInstrumentFromArgs(String[] args) {
-        if (args.length < 1) {
-            System.out.println("Please provide the instrument as a command-line argument.");
-            System.exit(1);
-        }
-
-        try {
-            return Instrument.valueOf(args[0].toUpperCase());
-        } catch (IllegalArgumentException e) {
-            System.out.println("Invalid instrument. Please provide a valid instrument.");
-            System.exit(1);
-        }
-
-        return null;
-    }
-
-    public static void main(String[] args) throws IOException, InterruptedException {
-        Instrument instrument = getInstrumentFromArgs(args);
-        Musician musician = new Musician(instrument);
-        musician.play();
     }
 }
