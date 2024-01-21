@@ -17,7 +17,7 @@ public enum Instrument {
         return this.sound;
     }
 
-    public static Instrument convert(String value){ //TODO is it useful?
+    public static Instrument convert(String value){ //TODO is it useful? // TODO nop
         try {
             return Instrument.valueOf(value);
         } catch (IllegalArgumentException ex) {

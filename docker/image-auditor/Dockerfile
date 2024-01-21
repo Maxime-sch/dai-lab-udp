@@ -3,7 +3,7 @@ FROM maven:3-eclipse-temurin-21-alpine as BUILDER
 # Copy shared code and build it first
 WORKDIR /build/shared
 
-COPY ./shared-code ./
+COPY ../shared-code ./
 RUN mvn clean package
 
 ARG SOURCE_PATH

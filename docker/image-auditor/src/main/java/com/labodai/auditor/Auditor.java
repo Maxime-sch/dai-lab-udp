@@ -1,14 +1,25 @@
 package com.labodai.auditor;
 
-import com.labodai.shared.Instrument;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 class Auditor {
     public static void main(String[] args) {
-        Instrument test;
-        // 1. Create a TCP server listening on port 2205
+        var state = new MusicianState();
+        var listener = new MusicianListener(state);
 
-        // 2. Create a UDP client listening for message from 239.255.22.5:9904
+        try (var executor = Executors.newVirtualThreadPerTaskExecutor()) {
+            // Create a UDP client listening for musician messages
+            executor.submit(listener);
 
-        // 3.
+
+            // Musician expiration thread
+            // TODO musician API
+
+
+            executor.awaitTermination(100000, TimeUnit.DAYS);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
