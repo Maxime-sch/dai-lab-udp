@@ -23,7 +23,11 @@ public class MusicianListener implements Runnable {
 
         while (iter.hasMoreElements()) {
             var netif = iter.nextElement();
-            socket.joinGroup(address, netif);
+            try {
+                socket.joinGroup(address, netif);
+            } catch (IOException e) {
+                System.out.println("Failed to join multicast group on iterface " + netif.getName());
+            }
         }
     }
 
@@ -56,6 +60,7 @@ public class MusicianListener implements Runnable {
                 state.onMusicianHeard(message.uuid(), message.sound());
             }
         } catch (IOException e) {
+            e.printStackTrace();
             throw new RuntimeException(e);
         }
     }

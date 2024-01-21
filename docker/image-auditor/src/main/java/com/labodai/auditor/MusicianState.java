@@ -2,8 +2,10 @@ package com.labodai.auditor;
 
 import java.time.Duration;
 import java.time.Instant;
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
 public class MusicianState {
     private static final Duration MUSICIAN_TIMEOUT = Duration.ofSeconds(5);
@@ -23,11 +25,7 @@ public class MusicianState {
 
     public Set<Musician> getMusicians() {
         expireMusicians();
-        var now = Instant.now();
-        return musicians.stream()
-                // musician must have been heard for some time before appearing in the list
-                //TODO understand why test fail with that .filter(musician -> musician.getFirstHeard().isBefore(now.minus(MUSICIAN_TIMEOUT)))
-                .collect(Collectors.toUnmodifiableSet());
+        return Collections.unmodifiableSet(musicians);
     }
 
     public synchronized void onMusicianHeard(String uuid, String sound) {

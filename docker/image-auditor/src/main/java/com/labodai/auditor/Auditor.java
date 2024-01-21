@@ -40,13 +40,11 @@ class Auditor {
             System.out.println("Started listening for musician message");
 
             // Serve active musician list on TCP socket
-            // TODO make implementation a multithreading server based on virtual thread
             while (true) {
                 handleAuditorClientRequest(state, socket);
             }
         } catch (IOException e) {
             e.printStackTrace();
-            System.out.println(e.getMessage());
             throw new RuntimeException(e);
         }
     }
