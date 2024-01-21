@@ -8,6 +8,7 @@ import java.net.InetSocketAddress;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.UUID;
+
 import static java.nio.charset.StandardCharsets.*;
 
 class Musician {
@@ -19,12 +20,15 @@ class Musician {
         uuid = UUID.randomUUID();
     }
 
+    // TODO burk, see https://studytrails.com/2016/09/12/java-google-json-parse-json-to-java/
    public String toString() { // JSON serialization of our musician playing a sound
       return "{\"uuid\": \"" + uuid.toString() + "\", \"sound\": \" " + instrument.getSound() + "\"}";
    }  
 
     class PlayInstrument extends TimerTask { //sends UDP packets with the aforementioned serialization
         public void run() {
+            // TODO inefficient to open a new socket everytime you send a message, please fix
+            // also you can use the same datagrame everytime
             try (DatagramSocket socket = new DatagramSocket()) {
                   String message = Musician.this.toString();
                   byte[] payload = message.getBytes(UTF_8);
@@ -43,6 +47,7 @@ class Musician {
             return;
         }
 
+        // TODO love that, but extract it to a function
         Instrument instrument;
         try {
             instrument = Instrument.valueOf(args[0].toUpperCase());
@@ -51,8 +56,13 @@ class Musician {
             return;
         }
         Musician musician = new Musician(instrument);
+        // TODO I would replace the time with this. This is a more standard way of doing it
+        //        var executor = Executors.newSingleThreadScheduledExecutor();
+        //        executor.scheduleAtFixedRate(() -> System.out.println("HEllo"), 0, 1, TimeUnit.SECONDS);
+        // or you could just have a while true loop with a Thread.sleep of 5seconds since you don't need to do anything else on the main thread
         Timer timer = new Timer();
         timer.schedule(musician.new PlayInstrument(), 0, 1000); // Schedule the PlayInstrument task
+        // TODO: unexpected ahah
         Runtime.getRuntime().addShutdownHook(new Thread(timer::cancel));
     }
 }
