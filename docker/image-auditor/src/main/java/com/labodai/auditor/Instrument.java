@@ -1,4 +1,4 @@
-package com.labodai.shared;
+package com.labodai.auditor;
 
 public enum Instrument {
     PIANO("ti-ta-ti"),
@@ -15,13 +15,5 @@ public enum Instrument {
 
     public String getSound() {
         return this.sound;
-    }
-
-    public static Instrument convert(String value){ //TODO is it useful? // TODO nop
-        try {
-            return Instrument.valueOf(value);
-        } catch (IllegalArgumentException ex) {
-            return null;
-        }
     }
 }

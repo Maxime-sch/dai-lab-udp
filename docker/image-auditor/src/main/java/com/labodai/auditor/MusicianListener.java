@@ -1,7 +1,6 @@
 package com.labodai.auditor;
 
 import com.google.gson.Gson;
-import com.labodai.shared.UdpConstants;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
@@ -12,7 +11,7 @@ import java.nio.charset.StandardCharsets;
 
 public class MusicianListener implements Runnable {
     private static final Gson gson = new Gson();
-    private static final InetSocketAddress address = new InetSocketAddress(UdpConstants.IP, UdpConstants.PORT);
+    private static final InetSocketAddress address = new InetSocketAddress("239.255.22.5", 9904);
     private final MusicianState state;
 
     public MusicianListener(MusicianState state) {
@@ -53,11 +52,9 @@ public class MusicianListener implements Runnable {
 
             while (true) {
                 var message = receiveNextMusicianMessage(datagram, socket);
-                System.out.println(message);
+                System.out.println("New message recieved with payload " + message);
                 state.onMusicianHeard(message.uuid(), message.sound());
             }
-
-            // socket.leaveGroup(address, netif);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

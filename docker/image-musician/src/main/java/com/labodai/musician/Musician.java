@@ -1,6 +1,5 @@
 package com.labodai.musician;
 
-import com.labodai.shared.*;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
@@ -32,7 +31,7 @@ class Musician {
             try (DatagramSocket socket = new DatagramSocket()) {
                   String message = Musician.this.toString();
                   byte[] payload = message.getBytes(UTF_8);
-                  InetSocketAddress dest_address = new InetSocketAddress(UdpConstants.IP, UdpConstants.PORT);
+                  InetSocketAddress dest_address = new InetSocketAddress("239.255.22.5", 9904);
                   DatagramPacket packet = new DatagramPacket(payload, payload.length, dest_address);
                   socket.send(packet);
                   System.out.println("Emitted sound");
