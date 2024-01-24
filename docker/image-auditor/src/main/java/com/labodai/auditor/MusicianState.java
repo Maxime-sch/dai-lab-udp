@@ -23,7 +23,7 @@ public class MusicianState {
                 });
     }
 
-    public Set<Musician> getMusicians() {
+    public synchronized Set<Musician> getMusicians() {
         expireMusicians();
         return Collections.unmodifiableSet(musicians);
     }
@@ -47,6 +47,4 @@ public class MusicianState {
             ));
         }
     }
-
-
 }

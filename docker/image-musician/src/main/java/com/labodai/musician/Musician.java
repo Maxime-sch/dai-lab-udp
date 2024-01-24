@@ -59,7 +59,6 @@ class Musician {
     }
 
     public void play() throws IOException, InterruptedException {
-
         try (var socket = new DatagramSocket()) {
             var destAddress = new InetSocketAddress("239.255.22.5", 9904);
             var payload = toString().getBytes(UTF_8);
